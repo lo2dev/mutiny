@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/io/github/lo2dev/Mutiny">
+    <file preprocess="xml-stripblanks">window.ui</file>
+    <file preprocess="xml-stripblanks">ui/help-overlay.ui</file>
+    <file preprocess="xml-stripblanks">ui/chat-message.ui</file>
+    <file preprocess="xml-stripblanks">ui/server-profile.ui</file>
+    <file alias="style.css">ui/style.css</file>
+  </gresource>
+
+  <gresource prefix="/io/github/lo2dev/Mutiny/icons/scalable/actions/">
+    <file preprocess="xml-stripblanks" alias="arrow-turn-up-right-symbolic.svg">../data/icons/scalable/actions/arrow-turn-up-right-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="compass2-symbolic.svg">../data/icons/scalable/actions/compass2-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="down-symbolic.svg">../data/icons/scalable/actions/down-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="image-round-symbolic.svg">../data/icons/scalable/actions/image-round-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="notepad-symbolic.svg">../data/icons/scalable/actions/notepad-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="paper-plane-symbolic.svg">../data/icons/scalable/actions/paper-plane-symbolic.svg</file>
+
+  </gresource>
+</gresources>

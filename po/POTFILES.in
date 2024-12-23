@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/io.github.lo2dev.Mutiny.desktop.in
+data/io.github.lo2dev.Mutiny.metainfo.xml.in
+data/io.github.lo2dev.Mutiny.gschema.xml
+src/main.py
+src/window.py
+src/window.blp

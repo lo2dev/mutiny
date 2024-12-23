@@ -1,0 +1,208 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ChatMessage : Gtk.Box {
+  orientation: vertical;
+
+  Box replies {
+    visible: false;
+    orientation: vertical;
+    margin-top: 6;
+
+    Box replying_to {
+      styles [
+        "dim-label"
+      ]
+
+      Image {
+        icon-name: "arrow-turn-up-right-symbolic";
+        margin-start: 26;
+      }
+
+      Button {
+        margin-start: 12;
+        has-frame: false;
+
+        child: Box {
+          spacing: 12;
+          Adw.Avatar {}
+
+          Label {
+            label: "message hazaaaa :tada:";
+          }
+        };
+      }
+    }
+  }
+
+  Box {
+      orientation: horizontal;
+      spacing: 12;
+      margin-start: 12;
+      margin-end: 12;
+      margin-top: 6;
+      margin-bottom: 6;
+
+      MenuButton avatar_menu {
+
+        halign: center;
+        valign: start;
+        menu-model: chat_user_menu;
+
+        styles [
+          "circular"
+        ]
+
+        child: Adw.Avatar message_avatar {
+          size: 35;
+          show-initials: true;
+        };
+      }
+
+      Box {
+        valign: start;
+        hexpand: true;
+        orientation: vertical;
+        spacing: 6;
+
+        Box {
+          Label username {
+            label: "Username";
+            selectable: true;
+
+            styles [
+              "heading"
+            ]
+          }
+
+          /* Label pronouns {
+            label: "any/all";
+            margin-start: 10;
+
+            styles [
+              "dim-label"
+            ]
+          } */
+
+          /*Label message_date {
+            label: "Today at 23:00";
+            halign: end;
+            hexpand: true;
+
+            styles [
+              "dim-label"
+            ]
+          }*/
+        }
+
+        Label content {
+          visible: false;
+          wrap-mode: word_char;
+          wrap: true;
+          selectable: true;
+          halign: start;
+          xalign: 0.0;
+        }
+
+        Box embed {
+          visible: false;
+          orientation: vertical;
+          halign: start;
+          spacing: 12;
+
+          styles [
+            "card",
+            "embed-card",
+            "accent",
+          ]
+
+          Box {
+            spacing: 6;
+
+            Box {
+              width-request: 10;
+              height-request: 10;
+
+              styles [
+                "embed-color-indicator",
+                "card"
+              ]
+            }
+
+            Label embed_title {
+              label: "User Banned";
+              halign: start;
+
+              styles [
+                "dim-label"
+              ]
+            }
+          }
+
+          Label embed_description {
+            selectable: true;
+            wrap: true;
+            wrap-mode: word_char;
+            xalign: 0.0;
+            halign: start;
+          }
+        }
+
+        Box attachments {
+          visible: false;
+          orientation: vertical;
+          spacing: 6;
+          margin-top: 6;
+
+          Box attachment {
+            height-request: 200;
+            halign: start;
+
+            Box {
+              valign: center;
+              halign: center;
+              orientation: vertical;
+              hexpand: true;
+              margin-start: 100;
+              margin-end: 100;
+
+              Image {
+                icon-name: "image-round-symbolic";
+                icon-size: large;
+              }
+
+              Label attachment_name {
+                label: "attachment";
+              }
+            }
+
+            styles [
+              "card"
+            ]
+          }
+        }
+      }
+    }
+}
+
+menu chat_user_menu {
+  section {
+    item {
+      label: _("View Profile");
+    }
+
+    item {
+      label: _("Mention");
+    }
+  }
+
+  section {
+    item {
+      label: _("Block");
+    }
+
+    item {
+      label: _("Report");
+    }
+  }
+}

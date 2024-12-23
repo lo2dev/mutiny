@@ -1,0 +1,360 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $MutinyWindow : Adw.ApplicationWindow {
+  default-width: 1440;
+  default-height: 680;
+
+  Adw.Breakpoint {
+    condition ("max-width: 860sp")
+
+    setters {
+      outer_view.collapsed: true;
+    }
+  }
+
+  Adw.Breakpoint {
+    condition ("max-width: 570sp")
+
+    setters {
+      outer_view.collapsed: true;
+      inner_view.collapsed: true;
+    }
+  }
+
+  content: Adw.OverlaySplitView outer_view {
+    max-sidebar-width: 290;
+
+    sidebar: Adw.NavigationPage main_sidebar {
+      title: "Mutiny";
+
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          show-title: true;
+
+          [start]
+          MenuButton {
+            label: "User Menu";
+            menu-model: user_header_menu;
+            has-frame: false;
+
+            styles [
+              "circular"
+            ]
+
+            child: Adw.Avatar  {
+              show-initials: true;
+              size: 24;
+            };
+          }
+
+          [end]
+          MenuButton {
+            label: _("Main Menu");
+            icon-name: "open-menu-symbolic";
+            menu-model: main_menu;
+            primary: true;
+          }
+        }
+
+        ScrolledWindow {
+          child: Box {
+            orientation: vertical;
+
+            ListBox {
+              selection-mode: none;
+
+              styles [
+                "navigation-sidebar"
+              ]
+
+              ListBoxRow {
+                Adw.ActionRow {
+                  title: _("Saved Notes");
+
+                  [prefix]
+                  Image {
+                    icon-name: "notepad-symbolic";
+                  }
+                }
+              }
+
+              ListBoxRow {
+                Adw.ActionRow {
+                  title: _("Discover");
+
+                  [prefix]
+                  Image {
+                    icon-name: "compass2-symbolic";
+                  }
+                }
+              }
+            }
+
+            Separator {
+              margin-end: 10;
+              margin-start: 10;
+            }
+
+            ListBox servers_list {
+              selection-mode: browse;
+
+              styles [
+                "navigation-sidebar"
+              ]
+            }
+          };
+        }
+      };
+    };
+
+    content: Adw.NavigationSplitView inner_view {
+      min-sidebar-width: 290;
+      max-sidebar-width: 320;
+      sidebar-width-fraction: 0.355;
+      show-content: true;
+
+      sidebar: Adw.NavigationPage server_sidebar {
+
+        child: Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar {
+            [end]
+            MenuButton {
+              tooltip-text: _("Server Menu");
+              menu-model: server_menu;
+              icon-name: "down-symbolic";
+            }
+          }
+
+          ScrolledWindow {
+            child: Box {
+              orientation: vertical;
+
+              /*Picture server_banner {
+                can-shrink: true;
+                content-fit: cover;
+                margin-start: 10;
+                margin-end: 10;
+              } */
+
+              ListBox channels_list {
+                selection-mode:  browse;
+
+                styles [
+                  "navigation-sidebar"
+                ]
+              }
+            };
+          }
+        };
+      };
+
+      content: Adw.NavigationPage {
+        tag: "content";
+
+        child: Adw.ToolbarView {
+          // reveal-bottom-bars: false; // use this for when content warning is visible
+
+          [top]
+          Adw.HeaderBar {
+            show-title: true;
+            title-widget: Adw.WindowTitle chat_view_title {};
+
+            [end]
+            MenuButton channel_header_menu_button {
+              menu-model: channel_header_menu;
+              icon-name: "view-more-symbolic";
+            }
+          }
+
+          content: ScrolledWindow {
+            child: Adw.Clamp chat_clamp {
+              maximum-size: 900;
+
+              /*Adw.StatusPage {
+                  icon-name: "chat-bubbles-empty-inverted-symbolic";
+                  title: _("Empty");
+                  description: _("No one has sent a message in this channel yet");
+                } */
+              Box {
+                orientation: vertical;
+                margin-top: 10;
+
+                ListBox chat_messages_list {
+                  selection-mode: none;
+
+                  styles [
+                    "navigation-sidebar",
+                    "remove-activatable"
+                  ]
+                }
+
+                Box {
+                  height-request: 15;
+                  margin-bottom: 3;
+
+                  Label typing_indicator {
+                    visible: false;
+                    label: _("Broski typing in chat");
+                    halign: start;
+                    valign: start;
+
+                    styles [
+                      "caption"
+                    ]
+                  }
+                }
+              }
+            };
+          };
+
+          [bottom]
+          ActionBar {
+            [center]
+            Adw.Clamp {
+              maximum-size: bind chat_clamp.maximum-size;
+
+              Box {
+                orientation: vertical;
+                Box {
+                  spacing: 5;
+                  Button add_attachments_button {
+                    label: _("Add attachments");
+                    icon-name: "mail-attachment-symbolic";
+                  }
+
+                  Entry message_bar {
+                    hexpand: true;
+                    show-emoji-icon: true;
+                    enable-emoji-completion: true;
+                    max-length: 2000;
+                    placeholder-text: _("Message this channel");
+                    extra-menu: messagebar_menu;
+                    activate => $send_chat_message();
+                  }
+
+                  Button send_message_button {
+                    label: _("Send Message");
+                    icon-name: "paper-plane-symbolic";
+                    clicked => $send_chat_message();
+
+                    styles [
+                      "suggested-action",
+                      "circular"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        };
+      };
+    };
+  };
+}
+
+Adw.Dialog token_dialog {
+  content-width: 400;
+  content-height: 200;
+  child: Adw.ToolbarView {
+    content: Adw.Clamp {
+      Box {
+        orientation: vertical;
+        spacing: 12;
+        valign: center;
+
+        ListBox {
+          margin-start: 24;
+          margin-end: 24;
+          styles ["boxed-list"]
+
+          Adw.PasswordEntryRow token_entry {
+            title: _("Token");
+          }
+        }
+
+        Button {
+          label: _("Submit");
+          halign: center;
+          clicked => $token_submitted();
+
+          styles ["pill", "suggested-action"]
+        }
+      }
+    };
+  };
+}
+
+menu main_menu {
+  section {
+    item (_("Create a Server"))
+  }
+
+  section {
+    item (_("Preferences"), "app.preferences")
+    item (_("Keyboard Shortcuts"))
+    item (_("About Mutiny"), "app.about")
+  }
+}
+
+menu user_header_menu {
+  section {
+    item (_("Account settings"))
+
+    submenu {
+      label: _("Status");
+      item (_("Online"))
+      item (_("Away"))
+      item (_("Focus"))
+      item (_("Do Not Disturb"))
+    }
+
+    item (_("Friends"))
+  }
+
+  section {
+    submenu {
+      label: _("Switch Account");
+      item ("Account 1")
+      item ("Account 2")
+      item ("Account 3")
+    }
+
+    item (_("Logout"), "app.quit")
+  }
+}
+
+menu server_menu {
+  section {
+    item (_("Edit Identity"))
+  }
+
+  section {
+    item (_("Create Invite"))
+    item (_("Server Details"), "win.open-server-profile")
+    item (_("Server Settings"))
+  }
+
+  section {
+    item (_("Report Server"))
+    item (_("Leave Server"))
+  }
+}
+
+menu channel_header_menu {
+  section actions {
+    item (_("Search"))
+  }
+
+  section information {
+    item (_("Members"))
+    item (_("Channel Details"))
+    item (_("Channel Settings"))
+  }
+}
+
+menu messagebar_menu {
+  item (_("Edit in New Window"))
+}

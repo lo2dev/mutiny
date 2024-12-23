@@ -1,0 +1,13 @@
+/* Temporary until ListBox gets replaced with ListView */
+.remove-activatable .activatable {
+  all:unset;
+}
+
+.embed-card {
+  padding: 24px;
+}
+
+.embed-color-indicator {
+  background: var(--accent-bg-color);
+}
+

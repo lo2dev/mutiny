@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=mutiny
+Exec=mutiny
+Icon=io.github.lo2dev.Mutiny
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

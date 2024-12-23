@@ -1,0 +1,97 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ServerProfile : Adw.Dialog {
+  content-width: 400;
+  content-height: 500;
+  title: _("Server Profile");
+  child: Adw.ToolbarView {
+
+    [top]
+    Adw.HeaderBar {
+      show-title: false;
+    }
+
+    ScrolledWindow {
+      Adw.Clamp {
+      maximum-size: 370;
+        Box {
+          orientation: vertical;
+          margin-top: 40;
+          spacing: 12;
+
+          Adw.Avatar server_avatar {
+            show-initials: true;
+            size: 100;
+          }
+
+          Label server_name {
+            selectable: true;
+
+            styles [
+              "title-1"
+            ]
+          }
+
+          Label server_owner {
+            selectable: true;
+
+            styles [
+              "dim-label"
+            ]
+          }
+
+          Label server_description {
+            wrap: true;
+            wrap-mode: word_char;
+            selectable: true;
+            justify: center;
+            halign: center;
+          }
+
+          /*FlowBox {
+            selection-mode: none;
+
+            Button {
+              label: "#revolt";
+              can-focus: false;
+              can-target: false;
+              can-shrink: true;
+              styles ["server-tag"]
+            }
+            Button {
+              label: "#client";
+              can-focus: false;
+              can-target: false;
+              can-shrink: true;
+              styles ["server-tag"]
+            }
+            Button {
+              label: "#unofficial";
+              can-focus: false;
+              can-target: false;
+              can-shrink: true;
+              styles ["server-tag"]
+            }
+          }*/
+        }
+      }
+    }
+
+    [bottom]
+    ActionBar {
+
+      [start]
+      Button {
+        icon-name: "flag-filled-symbolic";
+        halign: start;
+        tooltip-text: _("Report Server");
+
+        styles [
+          "destructive-action"
+        ]
+      }
+    }
+  };
+}
+
