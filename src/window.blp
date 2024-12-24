@@ -258,16 +258,38 @@ template $MutinyWindow : Adw.ApplicationWindow {
 Adw.Dialog token_dialog {
   content-width: 400;
   content-height: 200;
+  follows-content-size: true;
   child: Adw.ToolbarView {
     content: Adw.Clamp {
       Box {
         orientation: vertical;
         spacing: 12;
+        margin-top: 48;
+        margin-bottom: 48;
+        margin-start: 12;
+        margin-end: 12;
         valign: center;
+        vexpand: true;
+
+        Label {
+          wrap: true;
+          wrap-mode: word_char;
+          halign: center;
+          justify: center;
+          label: "Paste the following command into your browser's dev tools in your revolt instance to retrieve your user token. \nBe careful to not share it with anyone!";
+          styles ["caption", "dim-label"]
+        }
+
+        Label {
+          selectable: true;
+          halign: center;
+          wrap: true;
+          wrap-mode: word_char;
+          label: "controllers.client.getReadyClient().session.token";
+          styles ["caption", "dim-label", "monospace"]
+        }
 
         ListBox {
-          margin-start: 24;
-          margin-end: 24;
           styles ["boxed-list"]
 
           Adw.PasswordEntryRow token_entry {
