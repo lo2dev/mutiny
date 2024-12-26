@@ -53,8 +53,13 @@ class ChatMessage(Gtk.Box):
                 self.avatar_menu.props.visible = False
                 self.username.props.visible = False
 
-            self.message_avatar.props.text = message_data['author']
-            self.username.props.label = message_data['author']
+            # 'user' is coming from the websocket message data
+            if 'user' in message_data:
+                self.message_avatar.props.text = message_data['user']['username']
+                self.username.props.label = message_data['user']['username']
+            else:
+                self.message_avatar.props.text = message_data['author']
+                self.username.props.label = message_data['author']
 
             if not message_data['content'] == "":
                 self.content.props.label = message_data['content']
