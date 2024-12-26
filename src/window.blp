@@ -4,12 +4,13 @@ using Adw 1;
 template $MutinyWindow : Adw.ApplicationWindow {
   default-width: 1440;
   default-height: 680;
+  title: _("Mutiny");
 
   Adw.Breakpoint {
     condition ("max-width: 860sp")
 
     setters {
-      outer_view.collapsed: true;
+      inner_view.collapsed: true;
     }
   }
 
@@ -22,139 +23,155 @@ template $MutinyWindow : Adw.ApplicationWindow {
     }
   }
 
-  content: Adw.OverlaySplitView outer_view {
-    max-sidebar-width: 290;
+  content: Adw.NavigationSplitView outer_view {
+    max-sidebar-width: 490;
+    sidebar-width-fraction: 0.47;
+    show-content: true;
 
-    sidebar: Adw.NavigationPage main_sidebar {
-      title: "Mutiny";
+    sidebar: Adw.NavigationPage {
+      child: Adw.NavigationSplitView inner_view {
+        max-sidebar-width: 260;
+        min-sidebar-width: 210;
+        sidebar-width-fraction: 0.47;
+        show-content: true;
 
-      child: Adw.ToolbarView {
-        [top]
-        Adw.HeaderBar {
-          show-title: true;
+        sidebar: Adw.NavigationPage {
+          title: bind template.title;
+          Adw.ToolbarView {
+            [top]
+            Adw.HeaderBar {
+              show-title: true;
 
-          [start]
-          MenuButton {
-            label: "User Menu";
-            menu-model: user_header_menu;
-            has-frame: false;
-
-            styles [
-              "circular"
-            ]
-
-            child: Adw.Avatar  {
-              show-initials: true;
-              size: 24;
-            };
-          }
-
-          [end]
-          MenuButton {
-            label: _("Main Menu");
-            icon-name: "open-menu-symbolic";
-            menu-model: main_menu;
-            primary: true;
-          }
-        }
-
-        ScrolledWindow {
-          child: Box {
-            orientation: vertical;
-
-            ListBox {
-              selection-mode: none;
-
-              styles [
-                "navigation-sidebar"
-              ]
-
-              ListBoxRow {
-                Adw.ActionRow {
-                  title: _("Saved Notes");
-
-                  [prefix]
-                  Image {
-                    icon-name: "notepad-symbolic";
-                  }
-                }
-              }
-
-              ListBoxRow {
-                Adw.ActionRow {
-                  title: _("Discover");
-
-                  [prefix]
-                  Image {
-                    icon-name: "compass2-symbolic";
-                  }
-                }
-              }
-            }
-
-            Separator {
-              margin-end: 10;
-              margin-start: 10;
-            }
-
-            ListBox servers_list {
-              selection-mode: browse;
-
-              styles [
-                "navigation-sidebar"
-              ]
-            }
-          };
-        }
-      };
-    };
-
-    content: Adw.NavigationSplitView inner_view {
-      min-sidebar-width: 290;
-      max-sidebar-width: 320;
-      sidebar-width-fraction: 0.355;
-      show-content: true;
-
-      sidebar: Adw.NavigationPage server_sidebar {
-
-        child: Adw.ToolbarView {
-          [top]
-          Adw.HeaderBar {
-            [end]
-            MenuButton {
-              tooltip-text: _("Server Menu");
-              menu-model: server_menu;
-              icon-name: "down-symbolic";
-            }
-          }
-
-          ScrolledWindow {
-            child: Box {
-              orientation: vertical;
-
-              /*Picture server_banner {
-                can-shrink: true;
-                content-fit: cover;
-                margin-start: 10;
-                margin-end: 10;
-              } */
-
-              ListBox channels_list {
-                selection-mode:  browse;
+              [start]
+              MenuButton {
+                menu-model: user_header_menu;
+                has-frame: false;
 
                 styles [
-                  "navigation-sidebar"
+                  "circular"
                 ]
+
+                child: Adw.Avatar  {
+                  show-initials: true;
+                  size: 24;
+                };
               }
-            };
-          }
+
+              [end]
+              MenuButton {
+                label: _("Main Menu");
+                icon-name: "open-menu-symbolic";
+                menu-model: main_menu;
+                primary: true;
+              }
+            }
+
+            ScrolledWindow {
+              child: Box {
+                orientation: vertical;
+
+                ListBox {
+                  selection-mode: single;
+
+                  styles [
+                    "navigation-sidebar"
+                  ]
+
+                  Adw.ActionRow {
+                      title: _("Conversations");
+
+                      [prefix]
+                      Image {
+                        icon-name: "chat-bubbles-text-symbolic";
+                      }
+                    }
+
+                    Adw.ActionRow {
+                      title: _("Friends");
+
+                      [prefix]
+                      Image {
+                        icon-name: "people-symbolic";
+                      }
+                    }
+
+                    Adw.ActionRow {
+                      title: _("Saved Notes");
+
+                      [prefix]
+                      Image {
+                        icon-name: "notepad-symbolic";
+                      }
+                    }
+
+                    Adw.ActionRow {
+                      title: _("Discover");
+
+                      [prefix]
+                      Image {
+                        icon-name: "compass2-symbolic";
+                      }
+                    }
+                  }
+
+                  Separator {
+                    margin-end: 12;
+                    margin-start: 12;
+                  }
+
+                  ListBox servers_list {
+                    selection-mode: browse;
+
+                    styles [
+                      "navigation-sidebar"
+                    ]
+                  }
+                };
+              }
+            }
+          };
+
+          content: Adw.NavigationPage server_sidebar {
+            tag: "server-sidebar";
+            Adw.ToolbarView {
+              [top]
+              Adw.HeaderBar {
+                [end]
+                MenuButton {
+                  tooltip-text: _("Server Menu");
+                  menu-model: server_menu;
+                  icon-name: "down-symbolic";
+                }
+              }
+
+              ScrolledWindow {
+                child: Box {
+                  orientation: vertical;
+
+                  /*Picture server_banner {
+                    can-shrink: true;
+                    content-fit: cover;
+                    margin-start: 10;
+                    margin-end: 10;
+                  } */
+
+                  ListBox channels_list {
+                    selection-mode:  browse;
+
+                    styles [
+                      "navigation-sidebar"
+                    ]
+                  }
+                };
+              }
+            }
+          };
         };
       };
 
       content: Adw.NavigationPage {
         tag: "content";
-
-        child: Adw.ToolbarView {
+        Adw.ToolbarView {
           // reveal-bottom-bars: false; // use this for when content warning is visible
 
           [top]
@@ -249,10 +266,9 @@ template $MutinyWindow : Adw.ApplicationWindow {
               }
             }
           }
-        };
+        }
       };
     };
-  };
 }
 
 Adw.Dialog token_dialog {

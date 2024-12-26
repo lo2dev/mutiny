@@ -15,6 +15,8 @@
     <file preprocess="xml-stripblanks" alias="image-round-symbolic.svg">../data/icons/scalable/actions/image-round-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="notepad-symbolic.svg">../data/icons/scalable/actions/notepad-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="paper-plane-symbolic.svg">../data/icons/scalable/actions/paper-plane-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="people-symbolic.svg">../data/icons/scalable/actions/people-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="chat-bubbles-text-symbolic.svg">../data/icons/scalable/actions/chat-bubbles-text-symbolic.svg</file>
 
   </gresource>
 </gresources>
