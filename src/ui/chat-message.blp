@@ -69,6 +69,7 @@ template $ChatMessage : Gtk.Box {
           Label username {
             label: "Username";
             selectable: true;
+            ellipsize: end;
 
             styles [
               "heading"
@@ -97,6 +98,7 @@ template $ChatMessage : Gtk.Box {
 
         Label content {
           visible: false;
+          natural-wrap-mode: none;
           wrap-mode: word_char;
           wrap: true;
           selectable: true;
