@@ -19,9 +19,8 @@
 
 import gi, json
 gi.require_version('Soup', '3.0')
-gi.require_version('Json', '1.0')
 
-from gi.repository import Adw, Gtk, Soup, Json, GLib, Gio
+from gi.repository import Adw, Gtk, Soup, GLib, Gio
 from .websocket import ClientWebsocket
 from .chat_service_api import ChatServiceApi
 from .session import MutinySession
