@@ -99,7 +99,7 @@ class MutinyWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def token_submitted(self, _) -> None:
-        self.token_dialog.close()
+        self.token_dialog.force_close()
         self.session = MutinySession(
             "ws.revolt.chat",
             "api.revolt.chat",
