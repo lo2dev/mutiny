@@ -32,6 +32,7 @@ class MutinyWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'MutinyWindow'
 
     chat_view_stack = Gtk.Template.Child()
+    content_warning_stack = Gtk.Template.Child()
 
     token_dialog = Gtk.Template.Child()
     token_entry = Gtk.Template.Child()
@@ -62,6 +63,10 @@ class MutinyWindow(Adw.ApplicationWindow):
 
         self.create_action("open-server-profile", self.open_server_profile)
 
+
+    @Gtk.Template.Callback()
+    def content_warning_enter_channel(self, _):
+        self.content_warning_stack.props.visible_child_name = "content-view"
 
 
     def open_server_profile(self, _x, _y):
@@ -148,12 +153,22 @@ class MutinyWindow(Adw.ApplicationWindow):
         for channel in ready_channels:
             if channel['server'] == server['_id']:
                 channel_item = Adw.ActionRow(title=channel['name'], activatable=True)
+
+                if 'nsfw' in channel:
+                    channel_item.add_prefix(Gtk.Image.new_from_icon_name("dialog-warning-symbolic"))
+
                 channel_item.connect("activated", self.on_channel_changed, channel)
                 self.channels_list.append(channel_item)
 
 
     def on_channel_changed(self, _, channel):
         self.typing_indicator.props.visible = False
+
+        if 'nsfw' in channel:
+            self.content_warning_stack.props.visible_child_name = "content-warning"
+        else:
+            self.content_warning_stack.props.visible_child_name = "content-view"
+
         self.chat_view_title.props.title = channel['name']
         if 'description' in channel:
             self.chat_view_title.props.subtitle = channel['description']

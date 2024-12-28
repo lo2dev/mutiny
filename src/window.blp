@@ -171,111 +171,148 @@ template $MutinyWindow : Adw.ApplicationWindow {
 
       content: Adw.NavigationPage {
         tag: "content";
-        Adw.ToolbarView {
-          // reveal-bottom-bars: false; // use this for when content warning is visible
+        Stack content_warning_stack {
+          transition-type: crossfade;
 
-          [top]
-          Adw.HeaderBar {
-            show-title: true;
-            title-widget: Adw.WindowTitle chat_view_title {};
+          StackPage {
+            name: "content-view";
 
-            [end]
-            MenuButton channel_header_menu_button {
-              menu-model: channel_header_menu;
-              icon-name: "view-more-symbolic";
-            }
-          }
+            child: Adw.ToolbarView {
+              // reveal-bottom-bars: false; // use this for when content warning is visible
 
-          content: ScrolledWindow {
-            child: Adw.Clamp chat_clamp {
-              maximum-size: 900;
+              [top]
+              Adw.HeaderBar {
+                show-title: true;
+                title-widget: Adw.WindowTitle chat_view_title {};
 
-              Stack chat_view_stack {
-                visible-child-name: "chat-view";
+                [end]
+                MenuButton channel_header_menu_button {
+                  menu-model: channel_header_menu;
+                  icon-name: "view-more-symbolic";
+                }
+              }
 
-                StackPage {
-                  name: "chat-view";
-                  child: Box {
-                    orientation: vertical;
-                    margin-top: 10;
+              content: ScrolledWindow {
+                child: Adw.Clamp chat_clamp {
+                  maximum-size: 900;
 
-                    ListBox chat_messages_list {
-                      selection-mode: none;
+                  Stack chat_view_stack {
+                    visible-child-name: "chat-view";
 
-                      styles [
-                        "navigation-sidebar",
-                        "remove-activatable"
-                      ]
+                    StackPage {
+                      name: "chat-view";
+                      child: Box {
+                        orientation: vertical;
+                        margin-top: 10;
+
+                        ListBox chat_messages_list {
+                          selection-mode: none;
+
+                          styles [
+                            "navigation-sidebar",
+                            "remove-activatable"
+                          ]
+                        }
+
+                        Box {
+                          height-request: 15;
+                          margin-bottom: 3;
+
+                          Label typing_indicator {
+                            visible: false;
+                            label: _("Broski typing in chat");
+                            halign: start;
+                            valign: start;
+
+                            styles [
+                              "caption"
+                            ]
+                          }
+                        }
+                      };
                     }
 
-                    Box {
-                      height-request: 15;
-                      margin-bottom: 3;
+                    StackPage {
+                      name: "empty-channel";
+                      child: Adw.StatusPage {
+                        icon-name: "chat-bubble-empty-symbolic";
+                        title: _("Channel Empty");
+                        description: _("No one has sent a message in this channel yet");
+                      };
+                    }
+                  }
+                };
+              };
 
-                      Label typing_indicator {
-                        visible: false;
-                        label: _("Broski typing in chat");
-                        halign: start;
-                        valign: start;
+              [bottom]
+              ActionBar {
+                [center]
+                Adw.Clamp {
+                  maximum-size: bind chat_clamp.maximum-size;
+
+                  Box {
+                    orientation: vertical;
+                    Box {
+                      spacing: 5;
+
+                      Button add_attachments_button {
+                        label: _("Add attachments");
+                        icon-name: "mail-attachment-symbolic";
+                      }
+
+                      Entry message_bar {
+                        hexpand: true;
+                        show-emoji-icon: true;
+                        enable-emoji-completion: true;
+                        max-length: 2000;
+                        placeholder-text: _("Message this channel");
+                        extra-menu: messagebar_menu;
+                        activate => $send_chat_message();
+                      }
+
+                      Button send_message_button {
+                        label: _("Send Message");
+                        icon-name: "paper-plane-symbolic";
+                        clicked => $send_chat_message();
 
                         styles [
-                          "caption"
+                          "suggested-action",
+                          "circular"
                         ]
                       }
                     }
-                  };
-                }
-
-                StackPage {
-                  name: "empty-channel";
-                  child: Adw.StatusPage {
-                    icon-name: "chat-bubble-empty-symbolic";
-                    title: _("Channel Empty");
-                    description: _("No one has sent a message in this channel yet");
-                  };
+                  }
                 }
               }
             };
-          };
+          }
 
-          [bottom]
-          ActionBar {
-            [center]
-            Adw.Clamp {
-              maximum-size: bind chat_clamp.maximum-size;
+          StackPage {
+            name: "content-warning";
 
-              Box {
-                orientation: vertical;
-                Box {
-                  spacing: 5;
-                  Button add_attachments_button {
-                    label: _("Add attachments");
-                    icon-name: "mail-attachment-symbolic";
-                  }
-
-                  Entry message_bar {
-                    hexpand: true;
-                    show-emoji-icon: true;
-                    enable-emoji-completion: true;
-                    max-length: 2000;
-                    placeholder-text: _("Message this channel");
-                    extra-menu: messagebar_menu;
-                    activate => $send_chat_message();
-                  }
-
-                  Button send_message_button {
-                    label: _("Send Message");
-                    icon-name: "paper-plane-symbolic";
-                    clicked => $send_chat_message();
-
-                    styles [
-                      "suggested-action",
-                      "circular"
-                    ]
-                  }
-                }
+            child: Adw.ToolbarView {
+              [top]
+              Adw.HeaderBar {
+                show-title: false;
               }
-            }
+
+              content: Adw.StatusPage {
+                icon-name: "dialog-warning-symbolic";
+                title: _("Content Warning");
+                description: _("This channel is marked as Not Safe For Work. By entering this channel you confirm you are at least 18 years old");
+
+                child: Button {
+                  label: _("Enter");
+                  halign: center;
+                  clicked => $content_warning_enter_channel();
+
+                  styles [
+                    "pill",
+                    "suggested-action"
+                  ]
+                };
+              };
+            };
           }
         }
       };
