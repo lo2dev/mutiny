@@ -323,6 +323,8 @@ Adw.Dialog token_dialog {
   content-width: 400;
   content-height: 200;
   follows-content-size: true;
+  can-close: false;
+
   child: Adw.ToolbarView {
     content: Adw.Clamp {
       Box {
@@ -361,12 +363,26 @@ Adw.Dialog token_dialog {
           }
         }
 
-        Button {
-          label: _("Submit");
+        Box {
+          orientation: horizontal;
           halign: center;
-          clicked => $token_submitted();
+          spacing: 12;
 
-          styles ["pill", "suggested-action"]
+          Button {
+            label: _("Quit");
+            halign: center;
+            action-name: "app.quit";
+
+            styles ["pill"]
+          }
+
+          Button {
+            label: _("Submit");
+            halign: center;
+            clicked => $token_submitted();
+
+            styles ["pill", "suggested-action"]
+          }
         }
       }
     };
