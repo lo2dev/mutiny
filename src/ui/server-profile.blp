@@ -3,7 +3,7 @@ using Adw 1;
 
 template $ServerProfile : Adw.Dialog {
   content-width: 400;
-  content-height: 500;
+  content-height: 450;
   title: _("Server Profile");
   child: Adw.ToolbarView {
 
@@ -17,16 +17,21 @@ template $ServerProfile : Adw.Dialog {
       maximum-size: 370;
         Box {
           orientation: vertical;
-          margin-top: 40;
           spacing: 12;
+          margin-top: 6;
+          margin-bottom: 6;
+          valign: center;
 
           Adw.Avatar server_avatar {
             show-initials: true;
             size: 100;
+            margin-bottom: 12;
           }
 
           Label server_name {
             selectable: true;
+            wrap: true;
+            wrap-mode: word_char;
 
             styles [
               "title-1"
@@ -41,6 +46,19 @@ template $ServerProfile : Adw.Dialog {
             ]
           }
 
+          Label nsfw_indicator {
+            visible: false;
+            label: _("Adult");
+            halign: center;
+
+            styles [
+              "heading",
+              "nsfw-indicator",
+              "card",
+              "accent"
+            ]
+          }
+
           Label server_description {
             wrap: true;
             wrap-mode: word_char;
@@ -49,31 +67,11 @@ template $ServerProfile : Adw.Dialog {
             halign: center;
           }
 
-          /*FlowBox {
-            selection-mode: none;
-
-            Button {
-              label: "#revolt";
-              can-focus: false;
-              can-target: false;
-              can-shrink: true;
-              styles ["server-tag"]
-            }
-            Button {
-              label: "#client";
-              can-focus: false;
-              can-target: false;
-              can-shrink: true;
-              styles ["server-tag"]
-            }
-            Button {
-              label: "#unofficial";
-              can-focus: false;
-              can-target: false;
-              can-shrink: true;
-              styles ["server-tag"]
-            }
-          }*/
+          // Replace this with AdwWrapBox at some point
+          Box tags_box {
+            spacing: 6;
+            halign: center;
+          }
         }
       }
     }
@@ -81,11 +79,9 @@ template $ServerProfile : Adw.Dialog {
     [bottom]
     ActionBar {
 
-      [start]
+      [end]
       Button {
-        icon-name: "flag-filled-symbolic";
-        halign: start;
-        tooltip-text: _("Report Server");
+        label: _("Report Server");
 
         styles [
           "destructive-action"

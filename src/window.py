@@ -71,22 +71,12 @@ class MutinyWindow(Adw.ApplicationWindow):
 
     def open_server_profile(self, _x, _y):
         current_server = None
-        server_owner = None
 
         for server in self.ready_cache['servers']:
             if server['_id'] == self.session.current_server:
                 current_server = server
 
-        for user in self.ready_cache['users']:
-            if user['_id'] == current_server['owner']:
-                server_owner = user['username']
-
-
-        server_profile = ServerProfile(
-            server_owner or current_server['owner'],
-            current_server['name'],
-            current_server['description'] if 'description' in current_server else " "
-        )
+        server_profile = ServerProfile(current_server)
         server_profile.present(self)
 
 

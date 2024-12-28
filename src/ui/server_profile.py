@@ -18,6 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import gi, json
+import re as regex
 
 from gi.repository import Adw, Gtk
 
@@ -29,12 +30,29 @@ class ServerProfile(Adw.Dialog):
     server_name = Gtk.Template.Child()
     server_owner = Gtk.Template.Child()
     server_description = Gtk.Template.Child()
+    nsfw_indicator = Gtk.Template.Child()
+    tags_box = Gtk.Template.Child()
 
-    def __init__(self, server_owner, server_name, server_description, **kwargs):
+    def __init__(self, server_data, **kwargs):
         super().__init__(**kwargs)
 
-        self.server_avatar.props.text = server_name
-        self.server_name.props.label = server_name
-        self.server_owner.props.label = f"by {server_owner}"
-        self.server_description.props.label = server_description
+        self.server_avatar.props.text = server_data['name']
+        self.server_name.props.label = server_data['name']
+        self.server_owner.props.label = f"by {server_data['owner']}"
+
+
+        # TODO: make this work
+        if 'description' in server_data:
+        #     pattern = r"/#(\w+)/g"
+        #     tags = regex.findall(pattern, server_data['description'])
+        #     new_description = regex.sub(pattern, "", server_data['description'])
+
+        #     for tag in tags:
+        #         tag_label = Gtk.Label(label=f"#{tag.lower()}")
+        #         tag_label.add_css_class("tag")
+        #         self.tags_box.append(tag_label)
+            self.server_description.props.label = server_data['description']
+
+        if 'nsfw' in server_data:
+            self.nsfw_indicator.props.visible = True
 
