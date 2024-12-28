@@ -32,6 +32,8 @@ from .server_profile import ServerProfile
 class MutinyWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'MutinyWindow'
 
+    chat_view_stack = Gtk.Template.Child()
+
     token_dialog = Gtk.Template.Child()
     token_entry = Gtk.Template.Child()
     servers_list = Gtk.Template.Child()
@@ -137,6 +139,7 @@ class MutinyWindow(Adw.ApplicationWindow):
         elif ws_message_dict['type'] == "Message" and self.session.current_channel == ws_message_dict['channel']:
             chat_message = ChatMessage(ws_message_dict)
             self.chat_messages_list.append(chat_message)
+            self.chat_view_stack.props.visible_child_name = "chat-view"
 
 
     def change_server(self, _self, server, ready_channels):
@@ -162,6 +165,11 @@ class MutinyWindow(Adw.ApplicationWindow):
     def on_request_channel_messages(self, messages_dict):
         self.chat_messages_list.remove_all()
         # print(json.dumps(messages_dict, indent=2))
+
+        if messages_dict == []:
+            self.chat_view_stack.props.visible_child_name = "empty-channel"
+        else:
+            self.chat_view_stack.props.visible_child_name = "chat-view"
 
         # last_message_user = None
         for message in messages_dict:

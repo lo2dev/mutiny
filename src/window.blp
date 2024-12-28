@@ -190,38 +190,49 @@ template $MutinyWindow : Adw.ApplicationWindow {
             child: Adw.Clamp chat_clamp {
               maximum-size: 900;
 
-              /*Adw.StatusPage {
-                  icon-name: "chat-bubbles-empty-inverted-symbolic";
-                  title: _("Empty");
-                  description: _("No one has sent a message in this channel yet");
-                } */
-              Box {
-                orientation: vertical;
-                margin-top: 10;
+              Stack chat_view_stack {
+                visible-child-name: "chat-view";
 
-                ListBox chat_messages_list {
-                  selection-mode: none;
+                StackPage {
+                  name: "chat-view";
+                  child: Box {
+                    orientation: vertical;
+                    margin-top: 10;
 
-                  styles [
-                    "navigation-sidebar",
-                    "remove-activatable"
-                  ]
+                    ListBox chat_messages_list {
+                      selection-mode: none;
+
+                      styles [
+                        "navigation-sidebar",
+                        "remove-activatable"
+                      ]
+                    }
+
+                    Box {
+                      height-request: 15;
+                      margin-bottom: 3;
+
+                      Label typing_indicator {
+                        visible: false;
+                        label: _("Broski typing in chat");
+                        halign: start;
+                        valign: start;
+
+                        styles [
+                          "caption"
+                        ]
+                      }
+                    }
+                  };
                 }
 
-                Box {
-                  height-request: 15;
-                  margin-bottom: 3;
-
-                  Label typing_indicator {
-                    visible: false;
-                    label: _("Broski typing in chat");
-                    halign: start;
-                    valign: start;
-
-                    styles [
-                      "caption"
-                    ]
-                  }
+                StackPage {
+                  name: "empty-channel";
+                  child: Adw.StatusPage {
+                    icon-name: "chat-bubble-empty-symbolic";
+                    title: _("Channel Empty");
+                    description: _("No one has sent a message in this channel yet");
+                  };
                 }
               }
             };

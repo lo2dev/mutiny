@@ -17,6 +17,6 @@
     <file preprocess="xml-stripblanks" alias="paper-plane-symbolic.svg">../data/icons/scalable/actions/paper-plane-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="people-symbolic.svg">../data/icons/scalable/actions/people-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="chat-bubbles-text-symbolic.svg">../data/icons/scalable/actions/chat-bubbles-text-symbolic.svg</file>
-
+    <file preprocess="xml-stripblanks" alias="chat-bubble-empty-symbolic.svg">../data/icons/scalable/actions/chat-bubble-empty-symbolic.svg</file>
   </gresource>
 </gresources>
