@@ -59,7 +59,7 @@ template $MutinyWindow : Adw.ApplicationWindow {
 
               [end]
               MenuButton {
-                label: _("Main Menu");
+                tooltip-text: _("Main Menu");
                 icon-name: "open-menu-symbolic";
                 menu-model: main_menu;
                 primary: true;
@@ -256,7 +256,7 @@ template $MutinyWindow : Adw.ApplicationWindow {
                       spacing: 5;
 
                       Button add_attachments_button {
-                        label: _("Add attachments");
+                        tooltip-text: _("Add attachments");
                         icon-name: "mail-attachment-symbolic";
                       }
 
@@ -271,7 +271,7 @@ template $MutinyWindow : Adw.ApplicationWindow {
                       }
 
                       Button send_message_button {
-                        label: _("Send Message");
+                        tooltip-text: _("Send  Message");
                         icon-name: "paper-plane-symbolic";
                         clicked => $send_chat_message();
 
