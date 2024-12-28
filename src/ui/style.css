@@ -1,3 +1,17 @@
+/* Material You theme if you so desire */
+/* :root { */
+/*   --window-bg-color: color-mix(in oklab, var(--accent-color), var(--view-bg-color) 90%); */
+/*   --window-fg-color: color-mix(in oklab, var(--accent-color), var(--view-fg-color) 50%); */
+
+/*   --sidebar-bg-color: color-mix(in oklab, var(--window-bg-color), var(--window-fg-color) 6%); */
+/*   --sidebar-fg-color: color-mix(in oklab, var(--accent-color), var(--sidebar-fg-color) 50%); */
+/*   --sidebar-backdrop-color: color-mix(in oklab, var(--window-bg-color), var(--window-fg-color) 4%); */
+
+/*   --secondary-sidebar-bg-color: color-mix(in oklab, var(--window-bg-color), var(--window-fg-color) 4%); */
+/*   --secondary-sidebar-fg-color: color-mix(in oklab, var(--accent-color), var(--secondary-sidebar-fg-color) 50%); */
+/*   --secondary-sidebar-backdrop-color: color-mix(in oklab, var(--window-bg-color), var(--window-fg-color) 2%); */
+/* } */
+
 /* Temporary until ListBox gets replaced with ListView */
 .remove-activatable .activatable {
   all:unset;
