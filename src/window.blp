@@ -356,7 +356,19 @@ Adw.Dialog token_dialog {
         }
 
         ListBox {
+          selection-mode: none;
           styles ["boxed-list"]
+
+          Adw.ComboRow instance_drop_down {
+            title: _("Instance");
+
+            model: StringList {
+              strings [
+                "Revolt",
+                "Uprizz"
+              ]
+            };
+          }
 
           Adw.PasswordEntryRow token_entry {
             title: _("Token");

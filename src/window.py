@@ -35,7 +35,9 @@ class MutinyWindow(Adw.ApplicationWindow):
     content_warning_stack = Gtk.Template.Child()
 
     token_dialog = Gtk.Template.Child()
+    instance_drop_down = Gtk.Template.Child()
     token_entry = Gtk.Template.Child()
+
     servers_list = Gtk.Template.Child()
     channels_list = Gtk.Template.Child()
     server_sidebar = Gtk.Template.Child()
@@ -99,12 +101,20 @@ class MutinyWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def token_submitted(self, _) -> None:
+        selected_instance = self.instance_drop_down.props.selected_item.get_string()
         self.token_dialog.force_close()
-        self.session = MutinySession(
-            "ws.revolt.chat",
-            "api.revolt.chat",
-            self.token_entry.props.text
-        )
+        if selected_instance == "Uprizz":
+            self.session = MutinySession(
+                "web.upryzing.app/ws",
+                "web.upryzing.app/api",
+                self.token_entry.props.text
+            )
+        elif selected_instance == "Revolt":
+            self.session = MutinySession(
+                "ws.revolt.chat",
+                "api.revolt.chat",
+                self.token_entry.props.text
+            )
 
         self.websocket_client = ClientWebsocket(self.session)
         self.websocket_client.connect("on_websocket_message", self.process_ws_message)
