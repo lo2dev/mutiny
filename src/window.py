@@ -141,8 +141,8 @@ class MutinyWindow(Adw.ApplicationWindow):
         self.session.current_server = server['_id']
 
         for channel in ready_channels:
-            if channel['server'] == server['_id']:
                 channel_item = Adw.ActionRow(title=channel['name'], activatable=True)
+            if channel['channel_type'] == "TextChannel" and channel['server'] == server['_id']:
 
                 if 'nsfw' in channel:
                     channel_item.add_prefix(Gtk.Image.new_from_icon_name("dialog-warning-symbolic"))
