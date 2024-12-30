@@ -25,15 +25,15 @@
   background: var(--accent-bg-color);
 }
 
-.nsfw-indicator {
-  color: var(--destructive-color);
-  background: color-mix(in oklab, var(--destructive-bg-color), var(--view-bg-color) 80%);
-  padding: 3px 24px;
+.tag {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  color: inherit;
+  border-radius: 99px;
+  padding: 3px 12px;
 }
 
-.tag {
-  border-radius: 999px;
-  background: var(--card-bg-color);
-  padding: 3px 12px;
+.nsfw {
+  color: var(--destructive-color);
+  background: color-mix(in oklab, var(--destructive-bg-color), var(--view-bg-color) 80%);
 }
 

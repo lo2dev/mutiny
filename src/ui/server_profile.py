@@ -30,7 +30,11 @@ class ServerProfile(Adw.Dialog):
     server_name = Gtk.Template.Child()
     server_owner = Gtk.Template.Child()
     server_description = Gtk.Template.Child()
+
+    official_indicator = Gtk.Template.Child()
+    verified_indicator = Gtk.Template.Child()
     nsfw_indicator = Gtk.Template.Child()
+
     tags_box = Gtk.Template.Child()
 
     def __init__(self, server_data, **kwargs):
@@ -43,15 +47,29 @@ class ServerProfile(Adw.Dialog):
 
         # TODO: make this work
         if 'description' in server_data:
-        #     pattern = r"/#(\w+)/g"
-        #     tags = regex.findall(pattern, server_data['description'])
-        #     new_description = regex.sub(pattern, "", server_data['description'])
+            pattern = regex.compile(r'#\w+')
+            pattern2 = regex.compile(r'\n#\w+.+', regex.MULTILINE)
 
-        #     for tag in tags:
-        #         tag_label = Gtk.Label(label=f"#{tag.lower()}")
-        #         tag_label.add_css_class("tag")
-        #         self.tags_box.append(tag_label)
-            self.server_description.props.label = server_data['description']
+            tags = pattern.findall(server_data['description'])
+            new_description = pattern2.sub("", server_data['description'])
+
+            if not tags == []:
+                self.tags_box.props.visible = True
+                for tag in tags:
+                    tag_label = Gtk.Label(label=f"{tag.strip().lower()}")
+                    tag_label.add_css_class("tag")
+                    self.tags_box.append(tag_label)
+
+            self.server_description.props.label = new_description.strip()
+
+        if 'flags' in server_data:
+            match server_data['flags']:
+                case 0:
+                    self.verified_indicator.props.visible = True
+                case 1:
+                    self.official_indicator.props.visible = True
+                case _:
+                 pass
 
         if 'nsfw' in server_data:
             self.nsfw_indicator.props.visible = True

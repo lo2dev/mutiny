@@ -14,12 +14,15 @@ template $ServerProfile : Adw.Dialog {
 
     ScrolledWindow {
       Adw.Clamp {
-      maximum-size: 370;
+        maximum-size: 370;
+
         Box {
           orientation: vertical;
           spacing: 12;
-          margin-top: 6;
-          margin-bottom: 6;
+          margin-top: 12;
+          margin-bottom: 12;
+          margin-start: 6;
+          margin-end: 6;
           valign: center;
 
           Adw.Avatar server_avatar {
@@ -46,17 +49,42 @@ template $ServerProfile : Adw.Dialog {
             ]
           }
 
-          Label nsfw_indicator {
-            visible: false;
-            label: _("Adult");
+          Adw.WrapBox server_flags {
+            align: 0.5;
+            child-spacing: 6;
+            line-spacing: 6;
             halign: center;
 
-            styles [
-              "heading",
-              "nsfw-indicator",
-              "card",
-              "accent"
-            ]
+            Label official_indicator {
+              visible: false;
+              label: _("Official");
+
+              styles [
+                "heading",
+                "tag",
+              ]
+            }
+
+            Label verified_indicator {
+              visible: false;
+              label: _("Verified");
+
+              styles [
+                "heading",
+                "tag",
+              ]
+            }
+
+            Label nsfw_indicator {
+              visible: false;
+              label: _("Adult");
+
+              styles [
+                "heading",
+                "tag",
+                "nsfw",
+              ]
+            }
           }
 
           Label server_description {
@@ -68,8 +96,12 @@ template $ServerProfile : Adw.Dialog {
           }
 
           // Replace this with AdwWrapBox at some point
-          Box tags_box {
-            spacing: 6;
+          Adw.WrapBox tags_box {
+            visible: false;
+            margin-top: 12;
+            align: 0.5;
+            child-spacing: 6;
+            line-spacing: 6;
             halign: center;
           }
         }
