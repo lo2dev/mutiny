@@ -45,7 +45,6 @@ class ServerProfile(Adw.Dialog):
         self.server_owner.props.label = f"by {server_data['owner']}"
 
 
-        # TODO: make this work
         if 'description' in server_data:
             pattern = regex.compile(r'#\w+')
             pattern2 = regex.compile(r'\n#\w+.+', regex.MULTILINE)
