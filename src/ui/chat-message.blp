@@ -112,7 +112,6 @@ template $ChatMessage : Gtk.Box {
 
         Box embed {
           visible: false;
-          orientation: vertical;
           halign: start;
           spacing: 12;
 
@@ -123,34 +122,40 @@ template $ChatMessage : Gtk.Box {
           ]
 
           Box {
+            width-request: 3;
+            vexpand: true;
+
+            styles [
+              "embed-color-indicator",
+              "card"
+            ]
+          }
+
+          Box {
+            orientation: vertical;
             spacing: 6;
 
             Box {
-              width-request: 10;
-              height-request: 10;
+              spacing: 6;
 
-              styles [
-                "embed-color-indicator",
-                "card"
-              ]
+              /* TODO: Embed Icon */
+
+              Label embed_title {
+                halign: start;
+
+                styles [
+                  "dim-label"
+                ]
+              }
             }
 
-            Label embed_title {
-              label: "User Banned";
+            Label embed_description {
+              selectable: true;
+              wrap: true;
+              wrap-mode: word_char;
+              xalign: 0.0;
               halign: start;
-
-              styles [
-                "dim-label"
-              ]
             }
-          }
-
-          Label embed_description {
-            selectable: true;
-            wrap: true;
-            wrap-mode: word_char;
-            xalign: 0.0;
-            halign: start;
           }
         }
 
