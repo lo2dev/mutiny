@@ -51,6 +51,8 @@ class MutinyWindow(Adw.ApplicationWindow):
     websocket_client = None
     chat_service_api = None
     session = None
+
+    client_user = None
     ready_cache: dict = None
 
 
@@ -120,6 +122,12 @@ class MutinyWindow(Adw.ApplicationWindow):
         self.websocket_client.connect("on_websocket_message", self.process_ws_message)
 
         self.chat_service_api = ChatServiceApi(self.session)
+
+        self.chat_service_api.request("GET", "/users/@me", self.on_client_user_requested)
+
+
+    def on_client_user_requested(self, data):
+        self.client_user = data
 
 
     def process_ws_message(self, _, ws_message) -> None:
@@ -200,7 +208,7 @@ class MutinyWindow(Adw.ApplicationWindow):
             # else:
             #     chat_message = ChatMessage(message)
 
-            chat_message = ChatMessage(message)
+            chat_message = ChatMessage(message, None, self.client_user)
             self.chat_messages_list.prepend(chat_message)
             # last_message_user = message['author']
 

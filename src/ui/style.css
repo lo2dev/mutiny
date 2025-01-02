@@ -37,3 +37,8 @@
   background: color-mix(in oklab, var(--destructive-bg-color), var(--view-bg-color) 80%);
 }
 
+.chat-mention {
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--accent-bg-color), var(--view-bg-color) 75%);
+}
+

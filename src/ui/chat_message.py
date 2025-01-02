@@ -18,6 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import json
+import re as regex
 from gi.repository import Adw, Gtk
 # from .chat_service_api import ChatServiceApi
 
@@ -36,7 +37,7 @@ class ChatMessage(Gtk.Box):
     embed_title = Gtk.Template.Child()
     embed_description = Gtk.Template.Child()
 
-    def __init__(self, message_data, cascade=False, **kwargs):
+    def __init__(self, message_data, cascade=False, client_user=None, **kwargs):
         super().__init__(**kwargs)
 
         if 'system' in message_data:
@@ -64,6 +65,15 @@ class ChatMessage(Gtk.Box):
             if 'content' in message_data and not message_data['content'] == "":
                 self.content.props.label = message_data['content']
                 self.content.props.visible = True
+
+                if client_user:
+                    mentions = regex.findall("<@.+>", message_data['content'])
+                    for mention in mentions:
+                        mention = regex.sub("<@|>","", mention)
+                        if mention == client_user['_id']:
+                            self.add_css_class("chat-mention")
+
+
 
             if 'embeds' in message_data:
                 for embed in message_data['embeds']:
