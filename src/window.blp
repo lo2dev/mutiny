@@ -133,34 +133,58 @@ template $MutinyWindow : Adw.ApplicationWindow {
 
           content: Adw.NavigationPage server_sidebar {
             tag: "server-sidebar";
-            Adw.ToolbarView {
-              [top]
-              Adw.HeaderBar {
-                [end]
-                MenuButton {
-                  tooltip-text: _("Server Menu");
-                  menu-model: server_menu;
-                  icon-name: "down-symbolic";
-                }
+
+            Stack server_sidebar_stack {
+              transition-type: crossfade;
+
+              StackPage {
+                name: "no-server-selected";
+
+                child: Adw.ToolbarView {
+                  [top]
+                  Adw.HeaderBar {
+                    show-title: false;
+                  }
+
+                  content: Adw.StatusPage {
+                    title: _("Select a Server");
+                  };
+                };
               }
 
-              ScrolledWindow {
-                child: Box {
-                  orientation: vertical;
+              StackPage {
+                name: "server-content";
 
-                  /*Picture server_banner {
-                    can-shrink: true;
-                    content-fit: cover;
-                    margin-start: 10;
-                    margin-end: 10;
-                  } */
+                child: Adw.ToolbarView {
+                  [top]
+                  Adw.HeaderBar {
+                    [end]
+                    MenuButton {
+                      tooltip-text: _("Server Menu");
+                      menu-model: server_menu;
+                      icon-name: "down-symbolic";
+                    }
+                  }
 
-                  ListBox channels_list {
-                    selection-mode:  browse;
+                  ScrolledWindow {
+                    child: Box {
+                      orientation: vertical;
 
-                    styles [
-                      "navigation-sidebar"
-                    ]
+                      /*Picture server_banner {
+                        can-shrink: true;
+                        content-fit: cover;
+                        margin-start: 10;
+                        margin-end: 10;
+                      } */
+
+                      ListBox channels_list {
+                        selection-mode:  browse;
+
+                        styles [
+                          "navigation-sidebar"
+                        ]
+                      }
+                    };
                   }
                 };
               }
@@ -171,15 +195,28 @@ template $MutinyWindow : Adw.ApplicationWindow {
 
       content: Adw.NavigationPage {
         tag: "content";
-        Stack content_warning_stack {
+        Stack content_stack {
           transition-type: crossfade;
+
+          StackPage {
+            name: "no-channel-selected";
+
+            child: Adw.ToolbarView {
+              [top]
+              Adw.HeaderBar {
+                show-title: false;
+              }
+
+              content: Adw.StatusPage {
+                title: _("Nothing to Show");
+              };
+            };
+          }
 
           StackPage {
             name: "content-view";
 
             child: Adw.ToolbarView {
-              // reveal-bottom-bars: false; // use this for when content warning is visible
-
               [top]
               Adw.HeaderBar {
                 show-title: true;

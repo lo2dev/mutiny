@@ -32,7 +32,8 @@ class MutinyWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'MutinyWindow'
 
     chat_view_stack = Gtk.Template.Child()
-    content_warning_stack = Gtk.Template.Child()
+    content_stack = Gtk.Template.Child()
+    server_sidebar_stack = Gtk.Template.Child()
 
     token_dialog = Gtk.Template.Child()
     instance_drop_down = Gtk.Template.Child()
@@ -72,7 +73,7 @@ class MutinyWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def content_warning_enter_channel(self, _):
-        self.content_warning_stack.props.visible_child_name = "content-view"
+        self.content_stack.props.visible_child_name = "content-view"
 
 
     def open_server_profile(self, _x, _y):
@@ -165,6 +166,9 @@ class MutinyWindow(Adw.ApplicationWindow):
         self.channels_list.remove_all()
         self.session.current_server = server['_id']
 
+        if self.server_sidebar_stack.props.visible_child_name == "no-server-selected":
+            self.server_sidebar_stack.props.visible_child_name = "server-content"
+
         for channel in ready_channels:
             if channel['channel_type'] == "TextChannel" and channel['server'] == server['_id']:
                 channel_item = Adw.ActionRow(
@@ -183,9 +187,9 @@ class MutinyWindow(Adw.ApplicationWindow):
         self.typing_indicator.props.visible = False
 
         if 'nsfw' in channel:
-            self.content_warning_stack.props.visible_child_name = "content-warning"
+            self.content_stack.props.visible_child_name = "content-warning"
         else:
-            self.content_warning_stack.props.visible_child_name = "content-view"
+            self.content_stack.props.visible_child_name = "content-view"
 
         self.chat_view_title.props.title = channel['name']
         if 'description' in channel:
@@ -197,6 +201,9 @@ class MutinyWindow(Adw.ApplicationWindow):
     def on_request_channel_messages(self, messages_dict):
         self.chat_messages_list.remove_all()
         # print(json.dumps(messages_dict, indent=2))
+
+        if self.content_stack.props.visible_child_name == "no-channel-selected":
+            self.content_stack.props.visible_child_name = "content-view"
 
         if messages_dict == []:
             self.chat_view_stack.props.visible_child_name = "empty-channel"
