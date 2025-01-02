@@ -41,6 +41,7 @@ class MutinyWindow(Adw.ApplicationWindow):
 
     client_user_menu = Gtk.Template.Child()
     client_user_avatar = Gtk.Template.Child()
+    friend_requests_indicator = Gtk.Template.Child()
     servers_list = Gtk.Template.Child()
     channels_list = Gtk.Template.Child()
     server_sidebar = Gtk.Template.Child()
@@ -133,6 +134,15 @@ class MutinyWindow(Adw.ApplicationWindow):
         self.client_user = data
         self.client_user_avatar.props.text = data['username']
         self.client_user_menu.props.tooltip_text = f"{data['username']}#{data['discriminator']}"
+
+        friend_requests_counter = 0
+        for relation in data['relations']:
+            if relation['status'] == "Incoming":
+                friend_requests_counter += 1
+
+        if friend_requests_counter != 0:
+            self.friend_requests_indicator.props.visible = True
+            self.friend_requests_indicator.props.label = str(friend_requests_counter)
 
 
     def process_ws_message(self, _, ws_message) -> None:

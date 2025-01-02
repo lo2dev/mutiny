@@ -93,6 +93,17 @@ template $MutinyWindow : Adw.ApplicationWindow {
                       Image {
                         icon-name: "people-symbolic";
                       }
+
+                      [suffix]
+                      Label friend_requests_indicator {
+                        visible: false;
+                        valign: center;
+
+                        styles [
+                          "notification-badge",
+                          "no-attention"
+                        ]
+                      }
                     }
 
                     Adw.ActionRow {
