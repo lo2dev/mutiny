@@ -156,7 +156,7 @@ class MutinyWindow(Adw.ApplicationWindow):
         elif ws_message_dict['type'] == "ChannelStopTyping":
             self.typing_indicator.props.visible = False
         elif ws_message_dict['type'] == "Message" and self.session.current_channel == ws_message_dict['channel']:
-            chat_message = ChatMessage(ws_message_dict)
+            chat_message = ChatMessage(ws_message_dict, None, self.client_user)
             self.chat_messages_list.append(chat_message)
             self.chat_view_stack.props.visible_child_name = "chat-view"
 
