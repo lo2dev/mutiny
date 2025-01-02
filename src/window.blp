@@ -43,7 +43,7 @@ template $MutinyWindow : Adw.ApplicationWindow {
               show-title: true;
 
               [start]
-              MenuButton {
+              MenuButton client_user_menu {
                 menu-model: user_header_menu;
                 has-frame: false;
 
@@ -51,7 +51,7 @@ template $MutinyWindow : Adw.ApplicationWindow {
                   "circular"
                 ]
 
-                child: Adw.Avatar  {
+                child: Adw.Avatar client_user_avatar  {
                   show-initials: true;
                   size: 24;
                 };

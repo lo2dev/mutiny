@@ -38,6 +38,8 @@ class MutinyWindow(Adw.ApplicationWindow):
     instance_drop_down = Gtk.Template.Child()
     token_entry = Gtk.Template.Child()
 
+    client_user_menu = Gtk.Template.Child()
+    client_user_avatar = Gtk.Template.Child()
     servers_list = Gtk.Template.Child()
     channels_list = Gtk.Template.Child()
     server_sidebar = Gtk.Template.Child()
@@ -128,6 +130,8 @@ class MutinyWindow(Adw.ApplicationWindow):
 
     def on_client_user_requested(self, data):
         self.client_user = data
+        self.client_user_avatar.props.text = data['username']
+        self.client_user_menu.props.tooltip_text = f"{data['username']}#{data['discriminator']}"
 
 
     def process_ws_message(self, _, ws_message) -> None:
