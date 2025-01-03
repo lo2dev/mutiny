@@ -97,8 +97,12 @@ class MutinyWindow(Adw.ApplicationWindow):
 
         json_message = json_message.encode()
         json_message_bytes = GLib.Bytes.new_take(json_message)
-        self.chat_service_api.request("POST", f"/channels/{self.session.current_channel}/messages", None, json_message_bytes)
+        self.chat_service_api.request("POST", f"/channels/{self.session.current_channel}/messages", self.on_message_sent, json_message_bytes)
         self.message_bar.props.text = ""
+
+
+    def on_message_sent(self, data):
+        self.chat_service_api.request("PUT", f"/channels/{data['channel']}/ack/{data['_id']}", None)
 
 
     def server_row_selected(self, _self, row):
