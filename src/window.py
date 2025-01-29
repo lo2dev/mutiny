@@ -123,7 +123,7 @@ class MutinyWindow(Adw.ApplicationWindow):
         elif selected_instance == "Revolt":
             self.session = MutinySession(
                 "ws.revolt.chat",
-                "api.revolt.chat",
+                "api.revolt.chat/0.8/",
                 self.token_entry.props.text
             )
 
