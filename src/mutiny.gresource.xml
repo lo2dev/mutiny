@@ -4,6 +4,7 @@
     <file preprocess="xml-stripblanks">window.ui</file>
     <file preprocess="xml-stripblanks">ui/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">ui/chat/chat-message.ui</file>
+    <file preprocess="xml-stripblanks">ui/chat/system-message.ui</file>
     <file preprocess="xml-stripblanks">ui/server-profile.ui</file>
     <file alias="style.css">ui/style.css</file>
   </gresource>
@@ -19,5 +20,10 @@
     <file preprocess="xml-stripblanks" alias="chat-bubbles-text-symbolic.svg">../data/icons/scalable/actions/chat-bubbles-text-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="chat-bubble-empty-symbolic.svg">../data/icons/scalable/actions/chat-bubble-empty-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="dialog-warning-symbolic.svg">../data/icons/scalable/actions/dialog-warning-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="arrow-turn-down-right-symbolic.svg">../data/icons/scalable/actions/arrow-turn-down-right-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="arrow-pointing-away-from-line-left-symbolic.svg">../data/icons/scalable/actions/arrow-pointing-away-from-line-left-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="build-alt-symbolic.svg">../data/icons/scalable/actions/build-alt-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="info-outline-symbolic.svg">../data/icons/scalable/actions/info-outline-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="skull-symbolic.svg">../data/icons/scalable/actions/skull-symbolic.svg</file>
   </gresource>
 </gresources>

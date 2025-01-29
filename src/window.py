@@ -25,6 +25,7 @@ from .websocket import ClientWebsocket
 from .chat_service_api import ChatServiceApi
 from .session import MutinySession
 from .chat_message import ChatMessage
+from .system_message import SystemMessage
 from .server_profile import ServerProfile
 
 @Gtk.Template(resource_path='/io/github/lo2dev/Mutiny/window.ui')
@@ -134,6 +135,19 @@ class MutinyWindow(Adw.ApplicationWindow):
         self.chat_service_api.request("GET", "/users/@me", self.on_client_user_requested)
 
 
+    def add_new_chat_message(self, data, append=False):
+        message = None
+        if 'system' in data:
+            message = SystemMessage(data)
+        else:
+            message = ChatMessage(data, None, self.client_user)
+
+        if append:
+            self.chat_messages_list.append(message)
+        else:
+            self.chat_messages_list.prepend(message)
+
+
     def on_client_user_requested(self, data):
         self.client_user = data
         self.client_user_avatar.props.text = data['username']
@@ -171,8 +185,7 @@ class MutinyWindow(Adw.ApplicationWindow):
         elif ws_message_dict['type'] == "ChannelStopTyping":
             self.typing_indicator.props.visible = False
         elif ws_message_dict['type'] == "Message" and self.session.current_channel == ws_message_dict['channel']:
-            chat_message = ChatMessage(ws_message_dict, None, self.client_user)
-            self.chat_messages_list.append(chat_message)
+            self.add_new_chat_message(ws_message_dict, append=True)
             self.chat_view_stack.props.visible_child_name = "chat-view"
 
 
@@ -224,18 +237,8 @@ class MutinyWindow(Adw.ApplicationWindow):
         else:
             self.chat_view_stack.props.visible_child_name = "chat-view"
 
-        # last_message_user = None
         for message in messages_dict:
-            # WIP Cascading
-            # chat_message = None
-            # if last_message_user == message['author'] and not 'replies' in message:
-            #     chat_message = ChatMessage(message, cascade=True)
-            # else:
-            #     chat_message = ChatMessage(message)
-
-            chat_message = ChatMessage(message, None, self.client_user)
-            self.chat_messages_list.prepend(chat_message)
-            # last_message_user = message['author']
+            self.add_new_chat_message(message)
 
 
     def create_action(self, name, callback, shortcuts=None):

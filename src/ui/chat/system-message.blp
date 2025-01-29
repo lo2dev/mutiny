@@ -1,0 +1,27 @@
+using Gtk 4.0;
+
+template $SystemMessage : Gtk.Box {
+  spacing: 12;
+  margin-start: 24;
+  margin-end: 12;
+  margin-top: 6;
+  margin-bottom: 6;
+
+  styles [
+    "dim-label",
+  ]
+
+  Image icon {
+    icon-name: "info-outline-symbolic";
+    halign: start;
+  }
+
+  Label content {
+    natural-wrap-mode: none;
+    wrap-mode: word_char;
+    wrap: true;
+    selectable: true;
+    halign: start;
+    xalign: 0.0;
+  }
+}
