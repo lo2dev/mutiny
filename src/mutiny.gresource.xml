@@ -3,7 +3,7 @@
   <gresource prefix="/io/github/lo2dev/Mutiny">
     <file preprocess="xml-stripblanks">window.ui</file>
     <file preprocess="xml-stripblanks">ui/help-overlay.ui</file>
-    <file preprocess="xml-stripblanks">ui/chat-message.ui</file>
+    <file preprocess="xml-stripblanks">ui/chat/chat-message.ui</file>
     <file preprocess="xml-stripblanks">ui/server-profile.ui</file>
     <file alias="style.css">ui/style.css</file>
   </gresource>

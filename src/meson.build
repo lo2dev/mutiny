@@ -6,7 +6,7 @@ blueprints = custom_target('blueprints',
   input: files(
     'window.blp',
     'ui/help-overlay.blp',
-    'ui/chat-message.blp',
+    'ui/chat/chat-message.blp',
     'ui/server-profile.blp'
   ),
   output: '.',
@@ -45,7 +45,7 @@ mutiny_sources = [
   'network/websocket.py',
   'network/chat_service_api.py',
   'network/session.py',
-  'ui/chat_message.py',
+  'ui/chat/chat_message.py',
   'ui/server_profile.py'
 ]
 
