@@ -26,12 +26,14 @@ from gi.repository import Adw, Gtk
 class ChatMessage(Gtk.Box):
     __gtype_name__ = 'ChatMessage'
 
+    id = None
     avatar_menu = Gtk.Template.Child()
     message_avatar = Gtk.Template.Child()
     username = Gtk.Template.Child()
     content = Gtk.Template.Child()
     attachments = Gtk.Template.Child()
     replies = Gtk.Template.Child()
+    is_edited = Gtk.Template.Child()
 
     embed = Gtk.Template.Child()
     embed_title = Gtk.Template.Child()
@@ -39,6 +41,12 @@ class ChatMessage(Gtk.Box):
 
     def __init__(self, message_data, cascade=False, client_user=None, **kwargs):
         super().__init__(**kwargs)
+
+        self.id = message_data['_id']
+
+        if 'edited' in message_data:
+            self.is_edited.props.visible = True
+            self.is_edited.props.tooltip_text = message_data['edited']
 
         if cascade:
             self.avatar_menu.props.visible = False

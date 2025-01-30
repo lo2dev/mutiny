@@ -70,6 +70,8 @@ template $ChatMessage : Gtk.Box {
         spacing: 6;
 
         Box {
+          spacing: 12;
+
           Label username {
             label: "Username";
             selectable: true;
@@ -77,6 +79,16 @@ template $ChatMessage : Gtk.Box {
 
             styles [
               "heading"
+            ]
+          }
+
+          Label is_edited {
+            visible: false;
+            label: _("Edited");
+
+            styles [
+              "dimmed",
+              "caption"
             ]
           }
 
