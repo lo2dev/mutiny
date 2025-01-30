@@ -28,5 +28,6 @@
     <file preprocess="xml-stripblanks" alias="pin-symbolic.svg">../data/icons/scalable/actions/pin-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="plus-symbolic.svg">../data/icons/scalable/actions/plus-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="minus-symbolic.svg">../data/icons/scalable/actions/minus-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="loupe-large-symbolic.svg">../data/icons/scalable/actions/loupe-large-symbolic.svg</file>
   </gresource>
 </gresources>

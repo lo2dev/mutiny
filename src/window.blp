@@ -238,6 +238,12 @@ template $MutinyWindow : Adw.ApplicationWindow {
                   menu-model: channel_header_menu;
                   icon-name: "view-more-symbolic";
                 }
+
+                [end]
+                ToggleButton {
+                  icon-name: "loupe-large-symbolic";
+                  tooltip-text: _("Search");
+                }
               }
 
               content: ScrolledWindow {
@@ -321,7 +327,7 @@ template $MutinyWindow : Adw.ApplicationWindow {
                       }
 
                       Button send_message_button {
-                        tooltip-text: _("Send  Message");
+                        tooltip-text: _("Send Message");
                         icon-name: "paper-plane-symbolic";
                         clicked => $send_chat_message();
 
@@ -507,7 +513,7 @@ menu server_menu {
 
 menu channel_header_menu {
   section actions {
-    item (_("Search"))
+    item (_("Pinned Messages"))
   }
 
   section information {
