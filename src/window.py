@@ -227,7 +227,7 @@ class MutinyWindow(Adw.ApplicationWindow):
         if 'description' in channel:
             self.chat_view_title.props.subtitle = channel['description']
         self.session.current_channel = channel['_id']
-        self.chat_service_api.request("GET", f"/channels/{channel['_id']}/messages", self.on_request_channel_messages)
+        self.chat_service_api.request("GET", f"/channels/{channel['_id']}/messages?include_users=true", self.on_request_channel_messages)
 
 
     def on_request_channel_messages(self, messages_dict):
@@ -237,12 +237,19 @@ class MutinyWindow(Adw.ApplicationWindow):
         if self.content_stack.props.visible_child_name == "no-channel-selected":
             self.content_stack.props.visible_child_name = "content-view"
 
-        if messages_dict == []:
+        if messages_dict['messages'] == []:
             self.chat_view_stack.props.visible_child_name = "empty-channel"
-        else:
-            self.chat_view_stack.props.visible_child_name = "chat-view"
+            return
 
-        for message in messages_dict:
+        self.chat_view_stack.props.visible_child_name = "chat-view"
+        for message in messages_dict['messages']:
+            for user in messages_dict['users']:
+                if user['_id'] == message['author']:
+                    if 'display_name' in user:
+                        message['author'] = user['display_name']
+                    else:
+                        message['author'] = user['username']
+
             self.add_new_chat_message(message)
 
 
