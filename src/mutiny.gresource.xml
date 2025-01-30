@@ -25,5 +25,8 @@
     <file preprocess="xml-stripblanks" alias="build-alt-symbolic.svg">../data/icons/scalable/actions/build-alt-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="info-outline-symbolic.svg">../data/icons/scalable/actions/info-outline-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="skull-symbolic.svg">../data/icons/scalable/actions/skull-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="pin-symbolic.svg">../data/icons/scalable/actions/pin-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="plus-symbolic.svg">../data/icons/scalable/actions/plus-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="minus-symbolic.svg">../data/icons/scalable/actions/minus-symbolic.svg</file>
   </gresource>
 </gresources>

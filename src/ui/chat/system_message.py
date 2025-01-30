@@ -29,17 +29,30 @@ class SystemMessage(Gtk.Box):
     def __init__(self, data, **kwargs):
         super().__init__(**kwargs)
 
-        if data['system']['type'] == 'user_joined':
-            self.content.props.label = f"{data['system']['id']} joined"
-            self.icon.props.icon_name = "arrow-turn-down-right-symbolic"
-            self.icon.props.css_classes = ["success"]
-        elif data['system']['type'] == 'user_left':
-            self.content.props.label = f"{data['system']['id']} left"
-            self.icon.props.icon_name = "arrow-pointing-away-from-line-left-symbolic"
-            self.icon.props.css_classes = ["warning"]
-        elif data['system']['type'] == 'user_banned':
-            self.content.props.label = f"{data['system']['id']} was banned"
-            self.icon.props.icon_name = "skull-symbolic"
-            self.icon.props.css_classes = ["error"]
-        elif data['system']['type'] == 'text':
-            self.content.props.label = data['system']['content']
+        match data['system']['type']:
+            case 'user_added':
+                self.content.props.label = f"{data['system']['id']} was added by {data['system']['by']}"
+                self.icon.props.icon_name = "plus-symbolic"
+                self.icon.props.css_classes = ["success"]
+            case 'user_remove':
+                self.content.props.label = f"{data['system']['id']} was removed by {data['system']['by']}"
+                self.icon.props.icon_name = "minus-symbolic"
+                self.icon.props.css_classes = ["error"]
+            case 'user_joined':
+                self.content.props.label = f"{data['system']['id']} joined"
+                self.icon.props.icon_name = "arrow-turn-down-right-symbolic"
+                self.icon.props.css_classes = ["success"]
+            case 'user_left':
+                self.content.props.label = f"{data['system']['id']} left"
+                self.icon.props.icon_name = "arrow-pointing-away-from-line-left-symbolic"
+                self.icon.props.css_classes = ["warning"]
+            case 'user_banned':
+                self.content.props.label = f"{data['system']['id']} was banned"
+                self.icon.props.icon_name = "skull-symbolic"
+                self.icon.props.css_classes = ["error"]
+            case 'message_pinned':
+                self.content.props.label = f"{data['system']['by']} pinned {data['system']['id']}"
+                self.icon.props.icon_name = "pin-symbolic"
+            case _:
+                self.content.props.label = data['system']['content']
+
