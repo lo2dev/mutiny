@@ -170,7 +170,6 @@ class MutinyWindow(Adw.ApplicationWindow):
         if ws_message_dict['type'] == "Ready":
             # print(json.dumps(ws_message_dict['servers'], indent=4))
             self.ready_cache = ws_message_dict
-
             for server in ws_message_dict['servers']:
                 server_item = Adw.ActionRow(
                     title=server['name'],
@@ -179,14 +178,20 @@ class MutinyWindow(Adw.ApplicationWindow):
                 server_item.connect("activated", self.change_server, server, ws_message_dict['channels'])
 
                 self.servers_list.append(server_item)
-        elif ws_message_dict['type'] == "ChannelStartTyping" and self.session.current_channel == ws_message_dict['id']:
+        elif ws_message_dict['type'] == "Message":
+            if self.session.current_channel != ws_message_dict['channel']:
+                return
+
+            self.add_new_chat_message(ws_message_dict, append=True)
+            self.chat_view_stack.props.visible_child_name = "chat-view"
+        elif ws_message_dict['type'] == "ChannelStartTyping":
+            if self.session.current_channel != ws_message_dict['id']:
+                return
+
             self.typing_indicator.props.label = "Broski typing in chat"
             self.typing_indicator.props.visible = True
         elif ws_message_dict['type'] == "ChannelStopTyping":
             self.typing_indicator.props.visible = False
-        elif ws_message_dict['type'] == "Message" and self.session.current_channel == ws_message_dict['channel']:
-            self.add_new_chat_message(ws_message_dict, append=True)
-            self.chat_view_stack.props.visible_child_name = "chat-view"
 
 
     def change_server(self, _self, server, ready_channels):
