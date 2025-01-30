@@ -153,18 +153,16 @@ class MutinyWindow(Adw.ApplicationWindow):
     def message_events(self, _, event, message):
         event = json.loads(event)
 
-        if event['type'] == 'MessageUpdate':
+        if 'channel' in event:
             if self.session.current_channel != event['channel']:
                     return
+
+        if event['type'] == 'MessageUpdate':
             if event['id'] == message.id:
-                # print(json.dumps(event, indent=2))
                 message.content.props.label = event['data']['content']
                 message.is_edited.props.visible = True
                 message.is_edited.props.tooltip_text = event['data']['edited']
         elif event['type'] == 'MessageDelete':
-            if self.session.current_channel != event['channel']:
-                    return
-            # print(json.dumps(event, indent=2))
             if event['id'] == message.id:
                 self.chat_messages_list.remove(message.get_parent())
 
