@@ -69,7 +69,12 @@ class ChatMessage(Gtk.Box):
                 for mention in mentions:
                     mention = regex.sub(r"<@|>","", mention)
                     if mention == client_user['_id']:
-                        self.add_css_class("chat-mention")
+                        self.add_css_class("pinged")
+
+        if 'mentions' in message_data:
+            for mention in message_data['mentions']:
+                if mention == client_user['_id']:
+                    self.add_css_class('pinged')
 
         if 'embeds' in message_data:
             for embed in message_data['embeds']:
