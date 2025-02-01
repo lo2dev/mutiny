@@ -144,13 +144,13 @@ class MutinyWindow(Adw.ApplicationWindow):
             message = SystemMessage(data)
         else:
             message = ChatMessage(data, None, self.client_user)
+            self.websocket_client.connect("on_websocket_message", self.message_events, message)
+            # print(self.client_user)
 
         if append:
             self.chat_messages_list.append(message)
         else:
             self.chat_messages_list.prepend(message)
-
-        self.websocket_client.connect("on_websocket_message", self.message_events, message)
 
 
     def message_events(self, _, event, message):
