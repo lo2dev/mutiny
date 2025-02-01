@@ -92,6 +92,9 @@ class MutinyWindow(Adw.ApplicationWindow):
     @Gtk.Template.Callback()
     def send_chat_message(self, _) -> None:
         message_content = self.message_bar.props.text
+        if message_content == "":
+            return
+
         json_message = json.dumps({
             "content" : f"{message_content}"
         })
