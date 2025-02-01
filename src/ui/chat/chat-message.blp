@@ -11,7 +11,7 @@ template $ChatMessage : Gtk.Box {
   Box replies {
     visible: false;
     orientation: vertical;
-    margin-top: 6;
+    margin-top: 3;
 
     Box replying_to {
       styles [
@@ -82,9 +82,11 @@ template $ChatMessage : Gtk.Box {
             ]
           }
 
-          Label is_edited {
+          Image is_edited {
             visible: false;
-            label: _("Edited");
+            icon-name: "edit-symbolic";
+            hexpand: true;
+            halign: end;
 
             styles [
               "dimmed",

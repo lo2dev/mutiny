@@ -46,7 +46,7 @@ class ChatMessage(Gtk.Box):
 
         if 'edited' in message_data:
             self.is_edited.props.visible = True
-            self.is_edited.props.tooltip_text = message_data['edited']
+            self.is_edited.props.tooltip_text = f"Edited {message_data['edited']}"
 
         if cascade:
             self.avatar_menu.props.visible = False
