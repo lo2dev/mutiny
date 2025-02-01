@@ -99,7 +99,7 @@ class MutinyWindow(Adw.ApplicationWindow):
             "content" : f"{message_content}"
         })
 
-        json_message = json_message.encode()
+        json_message = json_message.encode('utf-8')
         json_message_bytes = GLib.Bytes.new_take(json_message)
         self.chat_service_api.request("POST", f"/channels/{self.session.current_channel}/messages", self.on_message_sent, json_message_bytes)
         self.message_bar.props.text = ""
