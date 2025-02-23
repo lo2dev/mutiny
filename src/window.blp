@@ -246,7 +246,7 @@ template $MutinyWindow : Adw.ApplicationWindow {
                 }
               }
 
-              content: ScrolledWindow {
+              content: ScrolledWindow chat_scrolled_window {
                 child: Adw.Clamp chat_clamp {
                   maximum-size: 900;
 
@@ -268,12 +268,11 @@ template $MutinyWindow : Adw.ApplicationWindow {
                           ]
                         }
 
-                        Box {
-                          height-request: 15;
+                        Gtk.Revealer typing_revealer {
+                          transition-type: slide_up;
                           margin-bottom: 3;
 
-                          Label typing_indicator {
-                            visible: false;
+                          child: Label typing_indicator {
                             label: _("Broski typing in chat");
                             halign: start;
                             valign: start;
@@ -283,8 +282,15 @@ template $MutinyWindow : Adw.ApplicationWindow {
                             styles [
                               "caption"
                             ]
-                          }
+                          };
                         }
+
+                        // Box {
+                        //   height-request: 15;
+                        //   margin-bottom: 3;
+
+
+                        // }
                       };
                     }
 
@@ -428,6 +434,7 @@ Adw.Dialog token_dialog {
 
           Adw.PasswordEntryRow token_entry {
             title: _("Token");
+            text: "OPAQt4Rz2g7nUXtTALy9fIFU_r88D0qaFIzKwC4Mo17uvk64NpdwsxIuz1KjXt65";
           }
         }
 

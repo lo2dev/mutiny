@@ -48,6 +48,8 @@ class MutinyWindow(Adw.ApplicationWindow):
     server_sidebar = Gtk.Template.Child()
     chat_messages_list = Gtk.Template.Child()
     chat_view_title = Gtk.Template.Child()
+    chat_scrolled_window = Gtk.Template.Child()
+    typing_revealer = Gtk.Template.Child()
     typing_indicator = Gtk.Template.Child()
     message_bar = Gtk.Template.Child()
     send_message_button = Gtk.Template.Child()
@@ -71,6 +73,11 @@ class MutinyWindow(Adw.ApplicationWindow):
         self.message_bar.connect("activate", self.send_chat_message)
 
         self.create_action("open-server-profile", self.open_server_profile)
+
+        self.chat_scrolled_window.props.vadjustment.connect(
+            "notify::upper",
+            lambda _x, _y: self.chat_scrolled_window.emit("scroll_child", Gtk.ScrollType.END, False)
+        )
 
 
     @Gtk.Template.Callback()
@@ -209,10 +216,9 @@ class MutinyWindow(Adw.ApplicationWindow):
             if self.session.current_channel != ws_message_dict['id']:
                 return
 
-            self.typing_indicator.props.label = "Broski typing in chat"
-            self.typing_indicator.props.visible = True
+            self.typing_revealer.props.reveal_child = True
         elif ws_message_dict['type'] == "ChannelStopTyping":
-            self.typing_indicator.props.visible = False
+            self.typing_revealer.props.reveal_child = False
 
 
     def change_server(self, _self, server, ready_channels):
@@ -237,7 +243,7 @@ class MutinyWindow(Adw.ApplicationWindow):
 
 
     def on_channel_changed(self, _, channel):
-        self.typing_indicator.props.visible = False
+        self.typing_revealer.props.reveal_child = False
 
         if 'nsfw' in channel:
             self.content_stack.props.visible_child_name = "content-warning"
