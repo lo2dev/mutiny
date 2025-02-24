@@ -82,18 +82,6 @@ template $ChatMessage : Gtk.Box {
             ]
           }
 
-          Image is_edited {
-            visible: false;
-            icon-name: "edit-symbolic";
-            hexpand: true;
-            halign: end;
-
-            styles [
-              "dimmed",
-              "caption"
-            ]
-          }
-
           /* Label pronouns {
             label: "any/all";
             margin-start: 10;
@@ -114,14 +102,33 @@ template $ChatMessage : Gtk.Box {
           }*/
         }
 
-        Label content {
-          visible: false;
-          natural-wrap-mode: none;
-          wrap-mode: word_char;
-          wrap: true;
-          selectable: true;
-          halign: start;
-          xalign: 0.0;
+        Gtk.Box {
+          orientation: horizontal;
+          spacing: 3;
+
+          Label content {
+            visible: false;
+            natural-wrap-mode: none;
+            wrap-mode: word_char;
+            wrap: true;
+            selectable: true;
+            halign: start;
+            xalign: 0.0;
+          }
+
+          Image is_edited {
+            visible: false;
+            icon-name: "edit-symbolic";
+            hexpand: true;
+            halign: end;
+            valign: start;
+            margin-top: 3;
+
+            styles [
+              "dimmed",
+              "caption"
+            ]
+          }
         }
 
         Box embed {
