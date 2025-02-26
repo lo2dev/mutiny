@@ -1,0 +1,14 @@
+{
+    "name": "python3-python-ulid",
+    "buildsystem": "simple",
+    "build-commands": [
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"python-ulid\" --no-build-isolation"
+    ],
+    "sources": [
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/63/4e/cc2ba2c0df2589f35a4db8473b8c2ba9bbfc4acdec4a94f1c78934d2350f/python_ulid-3.0.0-py3-none-any.whl",
+            "sha256": "e4c4942ff50dbd79167ad01ac725ec58f924b4018025ce22c858bfcff99a5e31"
+        }
+    ]
+}

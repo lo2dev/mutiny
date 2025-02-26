@@ -91,20 +91,19 @@ template $ChatMessage : Gtk.Box {
             ]
           } */
 
-          /*Label message_date {
-            label: "Today at 23:00";
+          Label date {
             halign: end;
             hexpand: true;
 
             styles [
               "dim-label"
             ]
-          }*/
+          }
         }
 
         Gtk.Box {
           orientation: horizontal;
-          spacing: 3;
+          spacing: 12;
 
           Label content {
             visible: false;

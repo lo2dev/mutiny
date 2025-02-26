@@ -19,7 +19,8 @@
 
 import json
 import re as regex
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, Gtk, GLib
+from ulid import ULID as ulid
 # from .chat_service_api import ChatServiceApi
 
 @Gtk.Template(resource_path='/io/github/lo2dev/Mutiny/ui/chat/chat-message.ui')
@@ -34,6 +35,7 @@ class ChatMessage(Gtk.Box):
     attachments = Gtk.Template.Child()
     replies = Gtk.Template.Child()
     is_edited = Gtk.Template.Child()
+    date = Gtk.Template.Child()
 
     embed = Gtk.Template.Child()
     embed_title = Gtk.Template.Child()
@@ -43,6 +45,22 @@ class ChatMessage(Gtk.Box):
         super().__init__(**kwargs)
 
         self.id = message_data['_id']
+
+        ulid_object = ulid.from_str(self.id)
+        datetime = GLib.DateTime.new_from_unix_local(ulid_object.timestamp)
+        localtime_now = GLib.DateTime.new_now_local()
+        time_difference = localtime_now.difference(datetime)
+
+        if localtime_now.format("%x") == datetime.format("%x"):
+            self.date.props.label = datetime.format("%R")
+        elif localtime_now.format("%y") != datetime.format("%y"):
+            self.date.props.label = datetime.format("%d %b %y %R")
+        # 7 Days
+        elif time_difference > 604800000000:
+            self.date.props.label = datetime.format("%d %b %R")
+        # 1 Day
+        elif time_difference > 86400000000:
+            self.date.props.label = datetime.format("%a %R")
 
         if 'edited' in message_data:
             self.is_edited.props.visible = True
