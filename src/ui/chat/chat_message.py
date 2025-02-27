@@ -75,8 +75,8 @@ class ChatMessage(Gtk.Box):
             self.message_avatar.props.text = message_data['user']['username']
             self.username.props.label = message_data['user']['username']
         else:
-            self.message_avatar.props.text = message_data['author']
-            self.username.props.label = message_data['author']
+            self.message_avatar.props.text = message_data['name']
+            self.username.props.label = message_data['name']
 
         if 'content' in message_data and not message_data['content'] == "":
             self.content.props.label = message_data['content']

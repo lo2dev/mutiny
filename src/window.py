@@ -139,13 +139,17 @@ class MutinyWindow(Adw.ApplicationWindow):
 
 
     def add_new_chat_message(self, data, append=False):
+        for relation in self.client_user['relations']:
+            if data['author'] == relation['_id'] or ('user' in data and data['user']['_id'] == relation['_id']):
+                if relation['status'] == "Blocked":
+                    return
+
         message = None
         if 'system' in data:
             message = SystemMessage(data)
         else:
             message = ChatMessage(data, None, self.client_user)
             self.websocket_client.connect("on_websocket_message", self.message_events, message)
-            # print(self.client_user)
 
         if append:
             self.chat_messages_list.append(message)
@@ -267,9 +271,9 @@ class MutinyWindow(Adw.ApplicationWindow):
             for user in messages_dict['users']:
                 if user['_id'] == message['author']:
                     if 'display_name' in user:
-                        message['author'] = user['display_name']
+                        message['name'] = user['display_name']
                     else:
-                        message['author'] = user['username']
+                        message['name'] = user['username']
 
             self.add_new_chat_message(message)
 
