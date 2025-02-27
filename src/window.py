@@ -123,12 +123,6 @@ class MutinyWindow(Adw.ApplicationWindow):
                 "web.upryzing.app/api",
                 self.token_entry.props.text
             )
-        elif selected_instance == "Revolt":
-            self.session = MutinySession(
-                "ws.revolt.chat",
-                "api.revolt.chat/0.8/",
-                self.token_entry.props.text
-            )
 
         self.websocket_client = ClientWebsocket(self.session)
         self.websocket_client.connect("on_websocket_message", self.process_ws_message)
